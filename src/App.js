@@ -5,6 +5,7 @@ function App() {
   const dogImg = useRef(null)
   const [prediction, setPrediction] = useState(null)
   const [loading, setLoading] = useState('loading...')
+  const [certainty, setCertainty] = useState('')
   let mobileNetModel = null
 
   useEffect(() => {
@@ -18,6 +19,7 @@ function App() {
         console.log('Classes: ', classifications) // logs classes
 
         setPrediction(classifications[0].className)
+        setCertainty(`${Math.round(classifications[0].probability * 100)}%`)
       } else {
         setTimeout(loadMobilenet(), 1000)
       }
@@ -33,6 +35,9 @@ function App() {
         <img src='/pug.jpg' width={325} height={250} alt='pug' ref={dogImg} />
         <p>
           Prediction: {prediction}
+        </p>
+        <p>
+          Certainty: {certainty}
         </p>
       </header>
     </div>
